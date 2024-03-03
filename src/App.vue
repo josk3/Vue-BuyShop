@@ -4,10 +4,18 @@
 
 <template>
   <!-- 以及路由出口位置 -->
-  <RouterView/>
+  <RouterView />
+  <el-button type="success">Success</el-button>
+  <div class='test'>
+    dsad
+  </div>
 </template>
 
-<style scoped>
+<style scoped lang = "scss">
+.test {
+  color: $priceColor;
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -19,7 +27,7 @@ header {
 }
 
 nav {
-  width: 100%;  
+  width: 100%;
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;

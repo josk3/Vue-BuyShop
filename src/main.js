@@ -1,3 +1,4 @@
+// 默认重置样式
 import '@/styles/common.scss'
 
 import { createApp } from 'vue'
