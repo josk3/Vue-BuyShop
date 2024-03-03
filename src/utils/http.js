@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// 创建一个axios示例对象
 const instance = axios.create({
     baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
     timeout: 5000
