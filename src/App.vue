@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <!-- 以及路由出口位置 -->
+  <!-- 一级路由出口位置 -->
   <RouterView />
   <el-button type="success">Success</el-button>
   <div class='test'>
