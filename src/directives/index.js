@@ -10,7 +10,7 @@ export const lazyPlugin = {
                 // binding: binding.value指令等于号后面绑定的表达式的值图片url
 
                 // 测试自定义语法是否成功
-                console.log(el, binding.value)
+                // console.log(el, binding.value)
 
                 const { stop } = useIntersectionObserver(
                     el,
