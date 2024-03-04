@@ -7,7 +7,6 @@ import GoodsItems from './GoodsItems.vue';
 const getGoodsList = ref([])
 const getGoods = async () => {
   const res = await getGoodsAPI()
-  console.log(res)
   getGoodsList.value = res.data.result
 }
 
@@ -23,7 +22,7 @@ onMounted(() => getGoods())
           <strong class="label">
             <span>{{ cate.name }}馆</span>
             <span>{{ cate.saleInfo }}</span>
-          </strong>
+          </strong> 
           </RouterLink>
           <ul class="goods-list">
             <li v-for="good in cate.goods" :key="good.id">

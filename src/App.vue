@@ -5,10 +5,6 @@
 <template>
   <!-- 一级路由出口位置 -->
   <RouterView />
-  <el-button type="success">Success</el-button>
-  <div class='test'>
-    dsad
-  </div>
 </template>
 
 <style scoped lang = "scss">

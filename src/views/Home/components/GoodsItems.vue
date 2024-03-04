@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
     good:{
-        type:String
+        type:Object
     }
 })
 
