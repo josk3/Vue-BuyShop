@@ -3,24 +3,28 @@ import { getTopCategoryAPI } from '@/apis/category';
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { getBannerAPI } from '@/apis/home';
+import GoodsItem from '../Home/components/GoodsItems.vue';
 
+// 面包屑
 const route = useRoute()
 const getTopCategoryData = ref({})
 const getTopCategory = async () => {
+  // 获取路由参数进行传参
   const res = await getTopCategoryAPI(route.params.id)
+  console.log(res);
   getTopCategoryData.value = res.data.result
 }
-
 onMounted(() => getTopCategory())
 
+// banner
 const BannerList = ref([])
 const getBanner = async () => {
+  // 传参
   const res = await getBannerAPI({
     distributionSite: '2'
   })
   BannerList.value = res.data.result
 }
-
 onMounted(() => getBanner())
 </script>
 
@@ -33,18 +37,38 @@ onMounted(() => getBanner())
       <!-- 面包屑 -->
       <div class="bread-container">
         <el-breadcrumb separator=">">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
           <el-breadcrumb-item>{{ getTopCategoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <!-- banner -->
       <div class="home-banner">
-    <el-carousel height="500px">
-      <el-carousel-item v-for="item in BannerList" :key="item.id">
-        <img :src="item.imgUrl" alt="">
-      </el-carousel-item>
-    </el-carousel>
-  </div>
+        <el-carousel height="500px">
+          <el-carousel-item v-for="item in BannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="">
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+      <!-- 分类列表渲染 -->
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in getTopCategoryData.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div class="ref-goods" v-for="item in getTopCategoryData.children" :key="item.id">
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="good in item.goods" :good="good" :key="good.id" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
