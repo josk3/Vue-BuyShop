@@ -2,6 +2,8 @@
 import { getDetailAPI } from "@/apis/detail"
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import DetailHot from '@/views/Detail/components/DetailHot.vue'
+import ImageView from '@/components/ImageView/index.vue'
 
 // 面包屑
 const route = useRoute()
@@ -12,9 +14,12 @@ const getDetailData = async () => {
     DetailData.value = res.data.result
 }
 onMounted(() => getDetailData())
+
+
+
 </script>
 
-<template>
+<template> 
     <div class="xtx-goods-page">
         <div class="container" v-if="DetailData.details">
             <div class="bread-container">
@@ -39,7 +44,7 @@ onMounted(() => getDetailData())
                     <div class="goods-info">
                         <div class="media">
                             <!-- 图片预览区 -->
-
+                            <ImageView></ImageView>
                             <!-- 统计数量 -->
                             <ul class="goods-sales">
                                 <li>
@@ -116,16 +121,20 @@ onMounted(() => getDetailData())
                                         </li>
                                     </ul>
                                     <!-- 图片 -->
-                                    <img v-for="img in goods.details.pictures" :src="img" :key="img" alt="">
+                                    <img v-for="img in DetailData.details.pictures" :src="img" :key="img" alt="">
                                 </div>
                             </div>
                         </div>
                         <!-- 24热榜+专题推荐 -->
                         <div class="goods-aside">
+                            <!-- 24热榜 -->
+                            <DetailHot :typetitle="1"></DetailHot>
 
+                            <!-- 专题推荐 -->
+                            <DetailHot :typetitle="2"></DetailHot>
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
