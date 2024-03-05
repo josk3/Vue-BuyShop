@@ -1,50 +1,14 @@
 <script setup>
-import { getTopCategoryAPI } from '@/apis/category';
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { getBannerAPI } from '@/apis/home';
+import { useCategory }from './composables/useCategory'
 import GoodsItem from '../Home/components/GoodsItems.vue';
-import { onBeforeRouteUpdate } from 'vue-router';
+import {useBanner} from '@/views/Category/composables/useBanner'
 
-// 数据
-const route = useRoute()
-const getTopCategoryData = ref({})
-// const getTopCategory = async () => {
-  // 获取路由参数进行传参
-//   console.log(route.params.id);
-//   const res = await getTopCategoryAPI(route.params.id)
-
-//   getTopCategoryData.value = res.data.result
-// }
-// onMounted(() => getTopCategory())
-// }
-
-const getTopCategory = async (id = route.params.id) => {
-  // 获取路由参数进行传参
-  const res = await getTopCategoryAPI(id)
-  console.log(id);
-
-  getTopCategoryData.value = res.data.result
-}
-onMounted(() => getTopCategory())
-
-// 路由导航守卫: 路由参数变化的时候 重新发送获取列表数据的接口
-onBeforeRouteUpdate((to) => {
-  console.log('路由变化了');
-  console.log(to.params.id);
-  getTopCategory(to.params.id)
-})
-
+// 分类数据
+const {getTopCategoryData} = useCategory()
+ 
 // banner
-const BannerList = ref([])
-const getBanner = async () => {
-  // 传参
-  const res = await getBannerAPI({
-    distributionSite: '2'
-  })
-  BannerList.value = res.data.result
-}
-onMounted(() => getBanner())
+const {BannerList} = useBanner()
+
 </script>
 
 <template>
