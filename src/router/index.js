@@ -4,6 +4,7 @@ import Login from '@/views/Login/index.vue'
 import Home from '@/views/Home/index.vue'
 import Category from '@/views/Category/index.vue'
 import SubCategory from '@/views/SubCategory/index.vue'
+import Detail from '@/views/Detail/index.vue'
 
 // createRouter:创建router实例对象
 // createWebHistory:创建history模式的路由
@@ -28,6 +29,10 @@ const router = createRouter({
           // 动态路由传参
           path: 'category/sub/:id',
           component: SubCategory
+        },
+        {
+          path: 'detail/:id',
+          component: Detail
         }
       ]
     },
@@ -36,6 +41,8 @@ const router = createRouter({
       component: Login
     }
   ],
+
+  // 路由滚动优化
   scrollBehavior() {
     return {
       top: 0

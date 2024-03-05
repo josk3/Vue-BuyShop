@@ -11,7 +11,7 @@ const CategoryData = ref({})
 
 const getCategoryData = async () => {
     const res = await getCategoryFilterAPI(route.params.id)
-    // console.log(res)
+    console.log(res)
     CategoryData.value = res.data.result
 }
 onMounted(() => getCategoryData())

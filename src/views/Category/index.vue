@@ -37,6 +37,7 @@ const {BannerList} = useBanner()
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in getTopCategoryData.children" :key="i.id">
+            <!-- 路由跳转: 动态传递路由参数id -->
             <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
