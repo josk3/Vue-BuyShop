@@ -25,11 +25,34 @@ const reqData = ref({
 })
 const SubCategoryData = ref([])
 const getSubCategoryData = async () => {
-    const res = await getSubCategoryAPI(reqData)
+    const res = await getSubCategoryAPI(reqData.value)
     console.log(res)
     SubCategoryData.value = res.data.result.items
 }
 onMounted(() => getSubCategoryData())
+
+// tab切换回调
+const tabChange = () => {
+    reqData.page = 1
+    getSubCategoryData()
+}
+
+// 无限加载
+const disabled = ref(false)
+const load = async () => {
+    console.log('加载更多');
+    
+    // 获取下一页的数据
+    reqData.value.page ++
+    const res = await getSubCategoryAPI(reqData.value)
+    SubCategoryData.value = [...SubCategoryData.value, ...res.data.result.items]
+
+    // 加载完毕 停止监听 可以联系后端
+    if(res.data.result.items == 0)
+    {
+        disabled.value = true
+    }
+}
 </script>
 
 <template>
@@ -45,12 +68,12 @@ onMounted(() => getSubCategoryData())
             </el-breadcrumb>
         </div>
         <div class="sub-container">
-            <el-tabs>
+            <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
                 <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
                 <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
                 <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
             </el-tabs>
-            <div class="body">
+            <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
                 <!-- 商品列表-->
                 <GoodsItems v-for="item in SubCategoryData" :good="item" :key="item.id"></GoodsItems>
             </div>
