@@ -11,6 +11,7 @@ export const useBanner = () => {
         })
         BannerList.value = res.data.result
     }
+    
     onMounted(() => getBanner())
 
     return {
