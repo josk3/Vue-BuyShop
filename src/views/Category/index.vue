@@ -2,18 +2,26 @@
 import { getTopCategoryAPI } from '@/apis/category';
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { getBannerAPI } from '@/apis/home';
 
 const route = useRoute()
 const getTopCategoryData = ref({})
 const getTopCategory = async () => {
   const res = await getTopCategoryAPI(route.params.id)
-  console.log(route.params)
-  console.log(route)
-  // console.log(res)
   getTopCategoryData.value = res.data.result
 }
 
 onMounted(() => getTopCategory())
+
+const BannerList = ref([])
+const getBanner = async () => {
+  const res = await getBannerAPI({
+    distributionSite: '2'
+  })
+  BannerList.value = res.data.result
+}
+
+onMounted(() => getBanner())
 </script>
 
 <template>
@@ -29,6 +37,14 @@ onMounted(() => getTopCategory())
           <el-breadcrumb-item>{{ getTopCategoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+      <!-- banner -->
+      <div class="home-banner">
+    <el-carousel height="500px">
+      <el-carousel-item v-for="item in BannerList" :key="item.id">
+        <img :src="item.imgUrl" alt="">
+      </el-carousel-item>
+    </el-carousel>
+  </div>
     </div>
   </div>
 </template>
@@ -110,6 +126,17 @@ onMounted(() => getTopCategory())
 
   .bread-container {
     padding: 25px 0;
+  }
+}
+
+.home-banner {
+  width: 1240px;
+  height: 500px;
+  margin: 0 atuo;
+
+  img {
+    width: 100%;
+    height: 500px;
   }
 }
 </style>

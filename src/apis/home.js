@@ -1,9 +1,13 @@
 import instance from "@/utils/http";
 
 // banner接口函数
-export const getBannerAPI = () => {
+export const getBannerAPI = (params = {}) => {
+  const { distributionSite = '1' } = params
   return instance({
-    url: '/home/banner'
+    url: '/home/banner',
+    params: {
+      distributionSite
+    }
   })
 }
 
