@@ -1,10 +1,42 @@
 <script setup>
 
+
+// 表单校验（账号 + 密码）
+
+import { ref } from 'vue';
+
+// 1. 准备表单对象
+const form = ref({
+  acount: '',
+  password: '',
+  agree: true
+})
+
+// 2. 准备规则对象
+const rules =  {
+  acount: [
+    { required: true, message: '账号不能为空', trigger: 'blur' }
+  ],
+  password: [
+    { required: true, message: '密码不能为空', trigger: 'blur' },
+    { min: 6, max: 15, message: '密码在6-15位之间', trigger: 'blur' }
+  ],
+  agree: [
+    {
+      validator: (rule, value, callback) => {
+        console.log(value);
+        return value ? callback() : callback(new Error('请先同意协议'))
+      }
+    }
+  ]
+}
+
 </script>
 
 
 <template>
   <div>
+    <!-- 头部 -->
     <header class="login-header">
       <div class="container m-top-20">
         <h1 class="logo">
@@ -17,6 +49,8 @@
         </RouterLink>
       </div>
     </header>
+
+    <!-- 登录区域 -->
     <section class="login-section">
       <div class="wrapper">
         <nav>
@@ -24,26 +58,30 @@
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form label-position="right" label-width="60px"
-              status-icon>
-              <el-form-item  label="账户">
-                <el-input/>
+
+            <!-- 表单区域 -->
+            <el-form label-position="right" label-width="60px" status-icon :model="form" :rules="rules">
+              <el-form-item prop="acount" label="账户">
+                <el-input v-model="form.acount" />
               </el-form-item>
-              <el-form-item label="密码">
-                <el-input/>
+              <el-form-item prop="password" label="密码">
+                <el-input v-model="form.password" />
               </el-form-item>
-              <el-form-item label-width="22px">
-                <el-checkbox  size="large">
+              <el-form-item prop="agree" label-width="22px">
+                <el-checkbox size="large" v-model="form.agree">
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
               <el-button size="large" class="subBtn">点击登录</el-button>
             </el-form>
+
+          
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 底部 -->
     <footer class="login-footer">
       <div class="container">
         <p>
@@ -58,6 +96,8 @@
         <p>CopyRight &copy; 小兔鲜儿</p>
       </div>
     </footer>
+
+
   </div>
 </template>
 
