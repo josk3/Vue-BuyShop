@@ -33,9 +33,9 @@ onMounted(() => getDetailData())
 
                     <el-breadcrumb-item :to="`/category/${DetailData.categories[1].id}`">{{ DetailData.categories[1].name }}
                     </el-breadcrumb-item>
-                    <el-breadcrumb-item :to="`${DetailData.categories[0].id}`">{{ DetailData.categories[0].name }}
+                    <el-breadcrumb-item :to="`/category/sub/${DetailData.categories[0].id}`">{{ DetailData.categories[0].name }}
                     </el-breadcrumb-item>
-                    <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{ DetailData.desc }}</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
             <!-- 商品信息 -->
@@ -44,7 +44,7 @@ onMounted(() => getDetailData())
                     <div class="goods-info">
                         <div class="media">
                             <!-- 图片预览区 -->
-                            <ImageView></ImageView>
+                            <ImageView :imageList="DetailData.mainPictures"></ImageView>
                             <!-- 统计数量 -->
                             <ul class="goods-sales">
                                 <li>
