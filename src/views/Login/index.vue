@@ -4,22 +4,26 @@
 // 表单校验（账号 + 密码）
 
 import { ref } from 'vue';
+import { getLoginAPI } from '@/apis/user'
+
+import 'element-plus/es/components/message/style/css'
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router';
 
 // 1. 准备表单对象
 const form = ref({
-  acount: '',
+  account: '',
   password: '',
   agree: true
 })
-
 // 2. 准备规则对象
-const rules =  {
-  acount: [
+const rules = {
+  account: [
     { required: true, message: '账号不能为空', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '密码不能为空', trigger: 'blur' },
-    { min: 6, max: 15, message: '密码在6-15位之间', trigger: 'blur' }
+    { min: 3, max: 15, message: '密码在3-15位之间', trigger: 'blur' }
   ],
   agree: [
     {
@@ -33,16 +37,30 @@ const rules =  {
 
 // 3. 获取form实例做统一校验
 const formRef = ref(null)
+const router = useRouter()
 const clickButton = () => {
-
-  formRef.value.validate((valid) => {
+  const { account, password } = form.value
+  formRef.value.validate(async (valid) => {
     console.log(valid);
 
     // 以valid做为判断条件 如果通过校验才执行登录逻辑
-    if(valid)
-    {
-      
+    if (valid) {
+      const res = await getLoginAPI({ account, password })
+      console.log(res)
+
+      // 1. 提示用户
+      ElMessage({
+        type: 'success',
+        message: '登录成功'
+      })
+
+      // 2.路由跳转
+      // router.replace({path : '/'})
+      router.replace('/')
+
+
     }
+
   })
 }
 
@@ -76,8 +94,8 @@ const clickButton = () => {
 
             <!-- 表单区域 -->
             <el-form label-position="right" label-width="60px" status-icon :model="form" :rules="rules" ref="formRef">
-              <el-form-item prop="acount" label="账户">
-                <el-input v-model="form.acount" />
+              <el-form-item prop="account" label="账户">
+                <el-input v-model="form.account" />
               </el-form-item>
               <el-form-item prop="password" label="密码">
                 <el-input v-model="form.password" />
@@ -89,8 +107,8 @@ const clickButton = () => {
               </el-form-item>
               <el-button size="large" class="subBtn" @click="clickButton">点击登录</el-button>
             </el-form>
- 
-          
+
+
           </div>
         </div>
       </div>
