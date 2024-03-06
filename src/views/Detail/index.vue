@@ -4,17 +4,22 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import DetailHot from '@/views/Detail/components/DetailHot.vue'
 import ImageView from '@/components/ImageView/index.vue'
+import XtxGoodSku from '@/components/XtxSku/index.vue'
 
-// 面包屑
+// 面包屑 + 当前所有数据
 const route = useRoute()
 const DetailData = ref({})
 const getDetailData = async () => {
     const res = await getDetailAPI(route.params.id)
-    console.log(res);
+    // console.log(res);
     DetailData.value = res.data.result
 }
 onMounted(() => getDetailData())
 
+// sku组件产出数据事件
+const XtxSku = (msg) => {
+    console.log(msg)
+}
 
 
 </script>
@@ -93,9 +98,9 @@ onMounted(() => getDetailData())
                                 </dl>
                             </div>
                             <!-- sku组件 -->
-
+                            <XtxGoodSku :goods="DetailData" @change="XtxSku"></XtxGoodSku>
                             <!-- 数据组件 -->
-
+ 
                             <!-- 按钮组件 -->
                             <div>
                                 <el-button size="large" class="btn">
