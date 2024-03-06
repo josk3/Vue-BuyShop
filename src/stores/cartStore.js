@@ -1,11 +1,13 @@
+
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
+
+// 本地购物车
 export const useCartStore = defineStore('cart', () => {
-    // state封装数据
     const cartList = ref([])
 
-    // action异步请求
+    // 组件传参给action更新state 而不是调用接口
     const getCartList = (goods) => {
         const item = cartList.value.find((item) => goods.skuId === item.skuId)
         if(item)
