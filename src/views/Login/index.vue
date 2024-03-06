@@ -31,6 +31,21 @@ const rules =  {
   ]
 }
 
+// 3. 获取form实例做统一校验
+const formRef = ref(null)
+const clickButton = () => {
+
+  formRef.value.validate((valid) => {
+    console.log(valid);
+
+    // 以valid做为判断条件 如果通过校验才执行登录逻辑
+    if(valid)
+    {
+      
+    }
+  })
+}
+
 </script>
 
 
@@ -60,7 +75,7 @@ const rules =  {
           <div class="form">
 
             <!-- 表单区域 -->
-            <el-form label-position="right" label-width="60px" status-icon :model="form" :rules="rules">
+            <el-form label-position="right" label-width="60px" status-icon :model="form" :rules="rules" ref="formRef">
               <el-form-item prop="acount" label="账户">
                 <el-input v-model="form.acount" />
               </el-form-item>
@@ -72,9 +87,9 @@ const rules =  {
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="clickButton">点击登录</el-button>
             </el-form>
-
+ 
           
           </div>
         </div>
