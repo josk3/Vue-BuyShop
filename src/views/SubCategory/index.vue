@@ -3,7 +3,6 @@ import { getCategoryFilterAPI } from '@/apis/category'
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { getSubCategoryAPI } from '@/apis/category'
-import GoodsItems from '../Home/components/GoodsItems.vue';
 
 // 获取面包屑导航数据
 const route = useRoute()
@@ -75,7 +74,7 @@ const load = async () => {
             </el-tabs>
             <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
                 <!-- 商品列表-->
-                <GoodsItems v-for="item in SubCategoryData" :good="item" :key="item.id"></GoodsItems>
+                <XtxGoodsItems v-for="item in SubCategoryData" :good="item" :key="item.id"></XtxGoodsItems>
             </div>
         </div>
     </div>

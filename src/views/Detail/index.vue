@@ -3,8 +3,6 @@ import { getDetailAPI } from "@/apis/detail"
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import DetailHot from '@/views/Detail/components/DetailHot.vue'
-import ImageView from '@/components/ImageView/index.vue'
-import XtxGoodSku from '@/components/XtxSku/index.vue'
 
 // 面包屑 + 当前所有数据
 const route = useRoute()
@@ -17,7 +15,7 @@ const getDetailData = async () => {
 onMounted(() => getDetailData())
 
 // sku组件产出数据事件
-const XtxSku = (msg) => {
+const getXtxSku = (msg) => {
     console.log(msg)
 }
 
@@ -49,7 +47,7 @@ const XtxSku = (msg) => {
                     <div class="goods-info">
                         <div class="media">
                             <!-- 图片预览区 -->
-                            <ImageView :imageList="DetailData.mainPictures"></ImageView>
+                            <XtxImageView :imageList="DetailData.mainPictures"></XtxImageView>
                             <!-- 统计数量 -->
                             <ul class="goods-sales">
                                 <li>
@@ -98,7 +96,7 @@ const XtxSku = (msg) => {
                                 </dl>
                             </div>
                             <!-- sku组件 -->
-                            <XtxGoodSku :goods="DetailData" @change="XtxSku"></XtxGoodSku>
+                            <XtxSku :goods="DetailData" @change="getXtxSku"></XtxSku>
                             <!-- 数据组件 -->
  
                             <!-- 按钮组件 -->

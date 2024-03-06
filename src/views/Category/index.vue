@@ -1,6 +1,5 @@
 <script setup>
 import { useCategory }from './composables/useCategory'
-import GoodsItem from '../Home/components/GoodsItems.vue';
 import {useBanner} from '@/views/Category/composables/useBanner'
 
 // 分类数据
@@ -50,7 +49,7 @@ const {BannerList} = useBanner()
           <h3>- {{ item.name }}-</h3>
         </div>
         <div class="body">
-          <GoodsItem v-for="good in item.goods" :good="good" :key="good.id" />
+          <XtxGoodsItems v-for="good in item.goods" :good="good" :key="good.id" />
         </div>
       </div>
     </div>

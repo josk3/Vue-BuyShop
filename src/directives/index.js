@@ -7,7 +7,7 @@ export const lazyPlugin = {
         app.directive('img-lazy', {
             mounted(el, binding) {
                 // el:指令绑定的那个元素 img
-                // binding: binding.value指令等于号后面绑定的表达式的值图片url
+                // binding: binding.value指令: 等于号后面绑定的表达式的值图片url
 
                 // 测试自定义语法是否成功
                 // console.log(el, binding.value)
