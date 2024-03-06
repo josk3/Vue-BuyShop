@@ -4,13 +4,15 @@
 // 表单校验（账号 + 密码）
 
 import { ref } from 'vue';
-import { getLoginAPI } from '@/apis/user'
-
 import 'element-plus/es/components/message/style/css'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router';
+import {useUserStore} from '@/stores/user'
+
+const userStore = useUserStore()
 
 // 1. 准备表单对象
+
 const form = ref({
   account: '',
   password: '',
@@ -45,8 +47,8 @@ const clickButton = () => {
 
     // 以valid做为判断条件 如果通过校验才执行登录逻辑
     if (valid) {
-      const res = await getLoginAPI({ account, password })
-      console.log(res)
+      userStore.getUserInfo({ account, password })
+      // console.log(res)
 
       // 1. 提示用户
       ElMessage({
