@@ -2,12 +2,14 @@
 
 
 // 表单校验（账号 + 密码）
+import { getLoginAPI } from '@/apis/user'
 
 import { ref } from 'vue';
 import 'element-plus/es/components/message/style/css'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router';
-import {useUserStore} from '@/stores/user'
+
+import { useUserStore } from '@/stores/user'
 
 const userStore = useUserStore()
 
@@ -47,8 +49,8 @@ const clickButton = () => {
 
     // 以valid做为判断条件 如果通过校验才执行登录逻辑
     if (valid) {
-      userStore.getUserInfo({ account, password })
-      // console.log(res)
+      const res = await userStore.getUserInfo({ account, password })
+      // const res = await getLoginAPI({ account, password })
 
       // 1. 提示用户
       ElMessage({
@@ -59,10 +61,7 @@ const clickButton = () => {
       // 2.路由跳转
       // router.replace({path : '/'})
       router.replace('/')
-
-
     }
-
   })
 }
 
