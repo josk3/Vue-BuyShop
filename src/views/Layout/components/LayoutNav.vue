@@ -1,11 +1,13 @@
 <script setup>
 import { useUserStore } from '@/stores/user';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
+
+// 在router.js中也可以
+import router from '@/router';
 
 const userStore = useUserStore()
-const router = useRouter()
+// const router = useRouter()
 const confirm = () => {
-  console.log('大撒大撒');
   // 清楚用户信息 触发action
   userStore.clearUserInfo()
   router.push('/login')
