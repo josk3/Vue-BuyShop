@@ -9,7 +9,9 @@ const singleChange = (i,state) => {
     cartStore.singleChange(i, state)
 }
 
-
+const isAllChange = (state) => {
+    cartStore.isAllChange(state)
+}
 </script>
 
 <template>
@@ -20,7 +22,10 @@ const singleChange = (i,state) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox/>
+
+                <!-- 全选框 -->
+                <el-checkbox :model-value="cartStore.isAll" @change="isAllChange"/>
+
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
