@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useUserStore } from './user'
-import { insertCartAPI , getCartListAPI} from '@/apis/cart'
+import { insertCartAPI , getCartListAPI,delCartAPI} from '@/apis/cart'
 
 // 本地购物车
 export const useCartStore = defineStore('cart', () => {
@@ -33,7 +33,13 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     // 删除购物车商品
-    const delCart = (skuId) => {
+    const delCart = async (skuId) => {
+        if(token)
+        {   
+            await delCartAPI([skuId])
+            const res = await getCartListAPI()
+            cartList.value = res.data.result
+        }else{
         // 1. findIndex + splice写法
 
         // const index = cartList.value.findIndex((item) => item.skuId === skuId)
@@ -41,6 +47,8 @@ export const useCartStore = defineStore('cart', () => {
 
         // 2. filter过滤写法
         cartList.value = cartList.value.filter((item) => item.skuId != skuId)
+        }
+
     }
 
     // 计算属性 reduce方法 1.总数量 + 2.总价钱
