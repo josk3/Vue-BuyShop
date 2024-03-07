@@ -6,6 +6,7 @@ import Category from '@/views/Category/index.vue'
 import SubCategory from '@/views/SubCategory/index.vue'
 import Detail from '@/views/Detail/index.vue'
 import CartList from '@/views/CartList/index.vue'
+import CheckOut from '@/views/CheckOut/index.vue'
 
 // createRouter:创建router实例对象
 // createWebHistory:创建history模式的路由
@@ -38,6 +39,10 @@ const router = createRouter({
         { 
           path: 'cartlist',
           component: CartList
+        },
+        { 
+          path: 'checkout',
+          component: CheckOut
         }
       ]
     },
