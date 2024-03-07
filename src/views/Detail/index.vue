@@ -31,7 +31,7 @@ const countChange = (count) => {
 }
 
 // 加入购物车
-const addCart =  () => {
+const addCart = () => {
     if(skuObj.skuId)
     {
         // 规格已选择

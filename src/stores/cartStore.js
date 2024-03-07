@@ -2,24 +2,39 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useUserStore } from './user'
-import { insertCartAPI , getCartListAPI,delCartAPI} from '@/apis/cart'
+import { insertCartAPI, getCartListAPI, delCartAPI } from '@/apis/cart'
 
 // 本地购物车
 export const useCartStore = defineStore('cart', () => {
     const userStore = useUserStore()
-    const token = userStore.userInfo.token
+    // console.log(userStore);
+    // console.log(userStore.userInfo);
+    // console.log(userStore.userInfo.token);
+    const token = computed(() => userStore.userInfo.token)
+    // const token = userStore.userInfo.token  
+    console.log(token);
+    
+    // const token2 = computed(() => userStore.userInfo.token)
+
+    // 定义state-cartList
     const cartList = ref([])
+
+    const getNewCartList = async () => {
+        const res = await getCartListAPI()
+        cartList.value = res.data.result
+    }
 
     // 组件传参给action更新state 而不是调用接口
     const getCartList = async (goods) => {
-        const {skuId, count} = goods
-        const item = cartList.value.find((item) => goods.skuId === item.skuId) 
-        if (token) {
+        const { skuId, count } = goods
+        const item = cartList.value.find((item) => goods.skuId === item.skuId)
+        if (token.value) {
             // 登录
-            await insertCartAPI({skuId, count})
+            await insertCartAPI({ skuId, count })
             const res = await getCartListAPI()
             cartList.value = res.data.result
-        } else {
+        } 
+        else {
             // 未登录
             if (item) {
                 item.count += goods.count
@@ -28,25 +43,22 @@ export const useCartStore = defineStore('cart', () => {
                 cartList.value.push(goods)
             }
         }
-
-
     }
 
     // 删除购物车商品
     const delCart = async (skuId) => {
-        if(token)
-        {   
+        if (token.value) {
             await delCartAPI([skuId])
             const res = await getCartListAPI()
             cartList.value = res.data.result
-        }else{
-        // 1. findIndex + splice写法
+        } else {
+            // 1. findIndex + splice写法
 
-        // const index = cartList.value.findIndex((item) => item.skuId === skuId)
-        // cartList.value.splice(index, 1)
+            // const index = cartList.value.findIndex(item => item.skuId === skuId)
+            // cartList.value.splice(index, 1)
 
-        // 2. filter过滤写法
-        cartList.value = cartList.value.filter((item) => item.skuId != skuId)
+            // 2. filter过滤写法
+            cartList.value = cartList.value.filter(item => item.skuId != skuId)
         }
 
     }
@@ -85,6 +97,7 @@ export const useCartStore = defineStore('cart', () => {
         isAll,
         selectedCount,
         selectedPrice,
+        getNewCartList,
         getCartList,
         delCart,
         singleChange,
