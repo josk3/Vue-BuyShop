@@ -7,13 +7,9 @@ import { insertCartAPI, getCartListAPI, delCartAPI } from '@/apis/cart'
 // 本地购物车
 export const useCartStore = defineStore('cart', () => {
     const userStore = useUserStore()
-    // console.log(userStore);
-    // console.log(userStore.userInfo);
-    // console.log(userStore.userInfo.token);
     const token = computed(() => userStore.userInfo.token)
     // const token = userStore.userInfo.token  
-    console.log(token);
-    
+    // console.log(token);
     // const token2 = computed(() => userStore.userInfo.token)
 
     // 定义state-cartList

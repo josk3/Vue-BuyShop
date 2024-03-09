@@ -32,7 +32,7 @@ const rules = {
   agree: [
     {
       validator: (rule, value, callback) => {
-        console.log(value);
+        // console.log(value);
         return value ? callback() : callback(new Error('请先同意协议'))
       }
     }
@@ -44,12 +44,13 @@ const formRef = ref(null)
 const router = useRouter()
 const clickButton = () => {
   const { account, password } = form.value
+  console.log(form.value);
   formRef.value.validate(async (valid) => {
-    console.log(valid);
+    // console.log(valid);
 
     // 以valid做为判断条件 如果通过校验才执行登录逻辑
     if (valid) {
-      const res = await userStore.getUserInfo({ account, password })
+      await userStore.getUserInfo({ account, password })
       // const res = await getLoginAPI({ account, password })
 
       // 1. 提示用户
@@ -154,7 +155,7 @@ const clickButton = () => {
       height: 132px;
       width: 100%;
       text-indent: -9999px;
-      background: url("@/assets/images/logo.png") no-repeat center 18px / contain;
+      background: url("@/assets/images/logo.jpg") no-repeat center 18px / contain;
     }
   }
 

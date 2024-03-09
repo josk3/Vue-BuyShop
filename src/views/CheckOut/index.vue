@@ -2,23 +2,23 @@
 import { ref, onMounted } from 'vue';
 import { getCheckoutInfoAPI, createOrderAPI } from '@/apis/checkout'
 import { useRouter } from 'vue-router';
-import {useCartStore} from '@/stores/cartStore'
+import { useCartStore } from '@/stores/cartStore'
 const cartStore = useCartStore()
 const router = useRouter()
 
 const checkInfo = ref({})  // 订单对象
-const curAddress = ref({})  // 地址对象
+const curAddress = ref({})  // 默认地址对象
 const showDialog = ref(false)// 弹窗
 
-
+// 获取购物车数据 + 地址数据
 const getCheckInfo = async () => {
     const res = await getCheckoutInfoAPI()
+    console.log(res);
     checkInfo.value = res.data.result
     // 默认地址
     const item = checkInfo.value.userAddresses.find(item => item.isDefault === 0)
     curAddress.value = item
 }
-
 onMounted(() => getCheckInfo())
 
 // 切换地址
@@ -27,12 +27,14 @@ const switchAddress = (item) => {
     activeAddress.value = item
     console.log(item);
 }
+
+// 切换地址 确认
 const confirm = () => {
     curAddress.value = activeAddress.value
     showDialog.value = false
 }
 
-// 提交订单
+// 提交订单 向后端获取id
 const submit = async () => {
     const res = await createOrderAPI({
         deliveryTimeType: 1,
@@ -47,11 +49,11 @@ const submit = async () => {
         }),
         addressId: curAddress.value.id
     })
-    console.log(res);   
+    console.log(res);
     router.push({
-        path:'/pay',
-        query:{
-            id : res.data.result.id
+        path: '/pay',
+        query: {
+            id: res.data.result.id
         }
     })
     //更新购物车    
@@ -62,6 +64,27 @@ const submit = async () => {
 </script>
 
 <template>
+    <!-- 切换地址 -->
+    <el-dialog v-model="showDialog" title="切换收货地址" width="30%" center>
+        <div class="addressWrapper">
+            <div class="text item" :class="{ active: item.id === activeAddress.id }" v-for="item in checkInfo.userAddresses"
+                :key="item.id" @click="switchAddress(item)">
+                <ul>
+                    <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
+                    <li><span>联系方式：</span>{{ item.contact }}</li>
+                    <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
+                </ul>
+            </div>
+        </div>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button>取消</el-button>
+                <el-button type="primary" @click="confirm">确定</el-button>
+            </span>
+        </template>
+    </el-dialog>
+    <!-- 添加地址（暂无） -->
+
     <div class="xtx-pay-checkout-page">
         <div class="container">
             <div class="wrapper">
@@ -69,6 +92,8 @@ const submit = async () => {
                 <h3 class="box-title">收货地址</h3>
                 <div class="box-body">
                     <div class="address">
+
+                        <!-- 默认地址 -->
                         <div class="text">
                             <div class="none" v-if="!curAddress">您需要先添加收货地址才可提交订单。</div>
                             <ul v-else>
@@ -77,6 +102,7 @@ const submit = async () => {
                                 <li><span>收货地址：</span>{{ curAddress.fullLocation }} {{ curAddress.address }}</li>
                             </ul>
                         </div>
+
                         <div class="action">
                             <el-button size="large" @click="showDialog = true">切换地址</el-button>
                             <el-button size="large" @click="addFlag = true">添加地址</el-button>
@@ -158,26 +184,6 @@ const submit = async () => {
             </div>
         </div>
     </div>
-    <!-- 切换地址 -->
-    <el-dialog v-model="showDialog" title="切换收货地址" width="30%" center>
-        <div class="addressWrapper">
-            <div class="text item" :class="{ active: item.id === activeAddress.id }" v-for="item in checkInfo.userAddresses"
-                :key="item.id" @click="switchAddress(item)">
-                <ul>
-                    <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
-                    <li><span>联系方式：</span>{{ item.contact }}</li>
-                    <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
-                </ul>
-            </div>
-        </div>
-        <template #footer>
-            <span class="dialog-footer">
-                <el-button>取消</el-button>
-                <el-button type="primary" @click="confirm">确定</el-button>
-            </span>
-        </template>
-    </el-dialog>
-    <!-- 添加地址 -->
 </template>
 
 <style scoped lang="scss">

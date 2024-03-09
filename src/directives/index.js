@@ -16,7 +16,7 @@ export const lazyPlugin = {
                     el,
                     ([{ isIntersecting }]) => {
                         // 测试图片监控是否生效
-                        console.log(isIntersecting)
+                        // console.log(isIntersecting)
 
                         // 如果图片进入视口，发送 图片资源请求
                         if (isIntersecting) {

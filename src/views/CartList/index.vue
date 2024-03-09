@@ -5,12 +5,18 @@ const cartStore = useCartStore()
 
 // 单选回调
 const singleChange = (i,state) => {
-    console.log(i,state);
-    cartStore.singleChange(i, state)
+    console.log(i.skuId,state);
+    cartStore.singleChange(i.skuId, state)
 }
 
+// 全选回调
 const isAllChange = (state) => {
     cartStore.isAllChange(state)
+}
+
+// 确定删除嘛？
+const delCart = (skuId) => {
+  cartStore.delCart(skuId)
 }
 </script>
 
@@ -40,7 +46,7 @@ const isAllChange = (state) => {
               <td>
 
                 <!-- 单选框 -->
-                <el-checkbox :model-value="i.selected" @change="(a) => singleChange(i.skuId, a)"/>
+                <el-checkbox :model-value="i.selected" @change="(a) => singleChange(i, a)"/>
 
               </td>
               <td>
@@ -64,7 +70,7 @@ const isAllChange = (state) => {
               </td>
               <td class="tc">
                 <p>
-                  <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消" @confirm="delCart(i)">
+                  <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消" @confirm="delCart(i.skuId)">
                     <template #reference>
                       <a href="javascript:;">删除</a>
                     </template>
