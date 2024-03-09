@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 
 export const useCountDown = () => {
     const time = ref(0)
-    const t = null
+    let t = null
     const formatTime = computed(() => dayjs.unix(time.value).format('mm分ss秒'))
     let start = (curTime) => {
         time.value = curTime

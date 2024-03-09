@@ -10,11 +10,11 @@ import router from './router'
 // 引入懒加载插件并注册
 import { lazyPlugin } from '@/directives/index'
 // 组件插件导入
-import {componentPlugin} from '@/components/index'
+import { componentPlugin } from '@/components/index'
 
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 const app = createApp(App)
-const pinia =  createPinia()
+const pinia = createPinia()
 
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
