@@ -28,9 +28,8 @@ const getOrderList = async () => {
 }
 onMounted(() => getOrderList())
 
-// 
+// tab切换
 const tabChange = (state) => {
-  console.log(state);
   params.value.orderState = state
   getOrderList()
 }
@@ -40,10 +39,24 @@ const curChange = (page) => {
   params.value.page = page
   getOrderList()
 }
+
+// 状态映射
+const getOrderState = (state) => {
+  const getState = {
+    1: '待付款',
+    2: '待发货',
+    3: '待收货',
+    4: '待评价',
+    5: '已完成',
+    6: '已取消'
+  }
+
+  return getState[state]
+}
 </script>
 
 <template>
-  <div class="order-container" >
+  <div class="order-container">
     <el-tabs @tab-change="tabChange">
       <!-- tab切换 -->
       <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
@@ -62,9 +75,10 @@ const curChange = (page) => {
               <!-- 未付款，倒计时时间还有 -->
               <span class="down-time" v-if="order.orderState === 1">
                 <i class="iconfont icon-down-time"></i>
-                <b>付款截止: {{order.countdown}}</b>
+                <b>付款截止: {{ order.countdown }}</b>
               </span>
             </div>
+
             <div class="body">
               <div class="column goods">
                 <ul>
@@ -86,7 +100,7 @@ const curChange = (page) => {
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ order.orderState }}</p>
+                <p>{{ getOrderState(order.orderState) }}</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
@@ -103,8 +117,7 @@ const curChange = (page) => {
                 <p>在线支付</p>
               </div>
               <div class="column action">
-                <el-button  v-if="order.orderState === 1" type="primary"
-                  size="small">
+                <el-button v-if="order.orderState === 1" type="primary" size="small">
                   立即付款
                 </el-button>
                 <el-button v-if="order.orderState === 3" type="primary" size="small">
@@ -125,14 +138,13 @@ const curChange = (page) => {
           <!-- 分页 -->
           <div class="pagination-container">
             <el-pagination background layout="prev, pager, next" :total="total" :page-size="params
-            .pageSize" @current-change="curChange"/>
+              .pageSize" @current-change="curChange" />
           </div>
         </div>
       </div>
 
     </el-tabs>
   </div>
-
 </template>
 
 <style scoped lang="scss">
