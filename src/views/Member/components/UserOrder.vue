@@ -1,5 +1,6 @@
 <script setup>
 import { getUserOrder } from '@/apis/order'
+import { p } from '@antfu/utils';
 import { onMounted, ref } from 'vue'
 // tab列表
 const tabTypes = [
@@ -13,6 +14,8 @@ const tabTypes = [
 ]
 // 获取订单列表
 const orderList = ref([])
+const total = ref(0)
+
 const params = ref({
   orderState: 0,
   page: 1,
@@ -21,7 +24,7 @@ const params = ref({
 const getOrderList = async () => {
   const res = await getUserOrder(params.value)
   orderList.value = res.data.result.items
-  // total.value = res.data.result.counts
+  total.value = res.data.result.counts
 }
 onMounted(() => getOrderList())
 
@@ -29,6 +32,12 @@ onMounted(() => getOrderList())
 const tabChange = (state) => {
   console.log(state);
   params.value.orderState = state
+  getOrderList()
+}
+
+// 页数切换
+const curChange = (page) => {
+  params.value.page = page
   getOrderList()
 }
 </script>
@@ -44,6 +53,7 @@ const tabChange = (state) => {
           <el-empty description="暂无订单数据" />
         </div>
         <div v-else>
+
           <!-- 订单列表 -->
           <div class="order-item" v-for="order in orderList" :key="order.id">
             <div class="head">
@@ -111,9 +121,11 @@ const tabChange = (state) => {
               </div>
             </div>
           </div>
+
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination background layout="prev, pager, next" :total="total" :page-size="params
+            .pageSize" @current-change="curChange"/>
           </div>
         </div>
       </div>
