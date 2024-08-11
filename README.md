@@ -1,35 +1,32 @@
-# vue-rabbit
+<div align="center">
 
-This template should help get you started developing with Vue 3 in Vite.
+    
+# Vue-BuyFree开源商城
+    
+_🚀 一个基于Vue3、Vite、Vue Router、Element-Plus、less、Axios、pinia，拥有sku组件和下单流程的开源商城 🚀_
+    
+Vue BuyFree is an open-source marketplace based on Vue3 Vite、Vue Router、Element-Plus、less、Axios、pinia， An open-source marketplace with SKU components and ordering process
+</div>
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+#### 介绍
+具备商品浏览、搜索、筛选功能，支持用户注册登录、购物车管理、下单结算，并包含订单管理和支付功能。采用了图片懒加载、路由缓存等技术优化，保障性能和用户体验。
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+#### 依赖安装
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+#### 项目启动
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+#### 项目构建
 
 ```sh
 npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
 ```
