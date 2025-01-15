@@ -11,6 +11,7 @@ Vue BuyFree is an open-source marketplace based on Vue3 Vite、Vue Router、Elem
 
 #### 介绍
 具备商品浏览、搜索、筛选功能，支持用户注册登录、购物车管理、下单结算，并包含订单管理和支付功能。采用了图片懒加载、路由缓存等技术优化，保障性能和用户体验。
+<img width="1470" alt="image" src="https://github.com/user-attachments/assets/20dba635-91d1-45bc-a7bb-f81eff091f31" />
 
 
 #### 依赖安装
